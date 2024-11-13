@@ -61,6 +61,18 @@ build CMakeFiles/c__.dir/Entite.cpp.o: CXX_COMPILER__c___unscanned_Debug /home/a
   OBJECT_DIR = CMakeFiles/c__.dir
   OBJECT_FILE_DIR = CMakeFiles/c__.dir
 
+build CMakeFiles/c__.dir/Arme.cpp.o: CXX_COMPILER__c___unscanned_Debug /home/ad/Bureau/c++/Arme.cpp || cmake_object_order_depends_target_c__
+  DEP_FILE = CMakeFiles/c__.dir/Arme.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/c__.dir
+  OBJECT_FILE_DIR = CMakeFiles/c__.dir
+
+build CMakeFiles/c__.dir/Armure.cpp.o: CXX_COMPILER__c___unscanned_Debug /home/ad/Bureau/c++/Armure.cpp || cmake_object_order_depends_target_c__
+  DEP_FILE = CMakeFiles/c__.dir/Armure.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/c__.dir
+  OBJECT_FILE_DIR = CMakeFiles/c__.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target c__
@@ -69,7 +81,7 @@ build CMakeFiles/c__.dir/Entite.cpp.o: CXX_COMPILER__c___unscanned_Debug /home/a
 #############################################
 # Link the executable c__
 
-build c__: CXX_EXECUTABLE_LINKER__c___Debug CMakeFiles/c__.dir/main.cpp.o CMakeFiles/c__.dir/Entite.cpp.o
+build c__: CXX_EXECUTABLE_LINKER__c___Debug CMakeFiles/c__.dir/main.cpp.o CMakeFiles/c__.dir/Entite.cpp.o CMakeFiles/c__.dir/Arme.cpp.o CMakeFiles/c__.dir/Armure.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/c__.dir
   POST_BUILD = :

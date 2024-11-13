@@ -5,4 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(c__ main.cpp
         Entite.h
-        Entite.cpp)
+        Entite.cpp
+        Arme.cpp
+        Arme.h
+        Armure.h
+        Armure.cpp)
