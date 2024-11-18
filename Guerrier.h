@@ -1,11 +1,10 @@
 #include "Entite.h"
 
-class Monstre : public Entite {
+class Guerrier : public Entite {
 private:
-    string nom;
 public:
-    Monstre(string nom,int PV,int attaque);
-    ~Monstre();
+    Guerrier(int PV,int attaque);
+    ~Guerrier();
     void Afficher() const;
     int attaquer(Entite* cible);
     int defendre(int degats);

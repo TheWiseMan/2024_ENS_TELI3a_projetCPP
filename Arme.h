@@ -8,8 +8,8 @@ using namespace std;
 class Arme {
 public:
     string nom;
-    int valeur;
-
+    int degats;
+    Arme();
     Arme(string n, int v); // Déclaration du constructeur
     ~Arme();               // Déclaration du destructeur
 };

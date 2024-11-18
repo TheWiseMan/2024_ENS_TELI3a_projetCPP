@@ -7,6 +7,7 @@ class Armure {
 public:
     string nom;
     int valeur;
+    Armure();
     Armure(string n, int v);
     ~Armure();
 };

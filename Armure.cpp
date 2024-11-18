@@ -6,3 +6,7 @@ Armure::Armure(string n, int v){
 Armure::~Armure() {
     cout << "Armure détruite" << endl;
 }
+Armure::Armure(){
+    nom="Pas d'armure";
+    valeur=0;
+}

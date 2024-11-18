@@ -10,4 +10,11 @@ add_executable(c__ main.cpp
         Arme.h
         Armure.h
         Armure.cpp
-        Monstre.h)
+        Monstre.h
+        Monstre.cpp
+        Guerrier.h
+        Rodeur.h
+        Mage.h
+        Guerrier.cpp
+        Mage.cpp
+        Rodeur.cpp)

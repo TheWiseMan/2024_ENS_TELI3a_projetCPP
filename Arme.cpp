@@ -4,10 +4,14 @@
 // Constructeur de Arme
 Arme::Arme(string n, int v) {
     nom = n;
-    valeur = v;
+    degats = v;
 }
 
 // Destructeur de Arme
 Arme::~Arme() {
     cout << "Arme détruite" << endl;
+}
+Arme::Arme(){
+    nom="Pas d'arme";
+    degats=0;
 }
