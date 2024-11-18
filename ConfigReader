@@ -1,0 +1,1 @@
+./src/ConfigReader.cpp ./src/FileReader.cpp ./src/main.cpp - FileReader main

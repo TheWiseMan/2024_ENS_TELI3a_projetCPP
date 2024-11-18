@@ -10,3 +10,5 @@ make;
 ```
 
 Compiler et lancer -> `make; ./bin/main`
+
+G++17
