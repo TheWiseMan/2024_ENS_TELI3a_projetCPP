@@ -2,15 +2,18 @@ compile = g++
 outputex = ./bin/main
 flags = -lstdc++ -lstdc++fs
 classfiles = $(wildcard ./src/*.cpp)
-basefiles = $(patsubst ./src/%.cpp,%,$(classfiles))
+basefiles = $(patsubst ./src/%.cpp,./obj/%.o,$(classfiles))
 
 # Linking
 $(outputex): $(basefiles)
 	gcc -o $(outputex) ./obj/*.o $(flags)
 
 # Compiling
-$(basefiles):
-	$(compile) -o ./obj/$@.o -c ./src/$@.cpp -Wall
+#$(basefiles): ./src/$@.cpp
+#	$(compile) -o ./obj/$@.o -c ./src/$@.cpp -Wall;
+
+./obj/%.o: ./src/%.cpp
+	$(compile) -o $@ -c $(patsubst obj/%.o,src/%.cpp,$@) -Wall;
 
 test: $(outputex)
 	@chmod +x $(outputex)

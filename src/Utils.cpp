@@ -13,4 +13,11 @@ namespace Utils
         }
         cout << "}" << endl;
     }
+    void displayMapList(list<map<string, string>> list)
+    {
+        for (auto &&item : list)
+        {
+            Utils::displayMap(item);
+        }
+    }
 };
