@@ -1,23 +1,24 @@
-#include <iostream>
-using namespace std;
-#include"Arme.h"
-#include"Armure.h"
+// Entite.h
 #pragma once
 
-class Entite{
+#include <iostream>
+#include <string>
+#include "Arme.h"
+#include "Armure.h"
+using namespace std;
+
+class Entite {
 private:
-    int PV,PVmax;
+    int PV;
+    int PVmax;
     int attaque;
-    Armure armure;  // Attribut arme
-    Arme arme;  // Attribut arme
+    Armure armure;  // Attribut armure en private
+    Arme arme;      // Attribut arme en private
 public:
-    Entite(int pv, int atk);
-    ~Entite();
-
-    void Afficher();
-
-    int attaquer(Entite* cible);
-    int défendre(int degats);
-    void changerArmure(string Armure, int defense);
-    void changerArme(string Arme, int degat);
+    Entite(int pv, int atk);  // Constructeur
+    ~Entite();                // Destructeur
+    void afficher();
+    int défendre(int atk);
+    void changerArmure(string nom, int atk);
+    void changerArme(string nom, int atk);
 };

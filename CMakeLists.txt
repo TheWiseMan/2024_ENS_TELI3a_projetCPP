@@ -9,4 +9,5 @@ add_executable(c__ main.cpp
         Arme.cpp
         Arme.h
         Armure.h
-        Armure.cpp)
+        Armure.cpp
+        Monstre.h)

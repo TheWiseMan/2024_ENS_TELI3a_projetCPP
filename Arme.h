@@ -1,14 +1,15 @@
-//
-// Created by ad on 13/11/24.
-//
+// Arme.h
+#pragma once
+
+#include <string>
 #include <iostream>
 using namespace std;
-#pragma once
 
 class Arme {
 public:
     string nom;
     int valeur;
-    ~Arme();
-    Arme(string n, int v);
+
+    Arme(string n, int v); // Déclaration du constructeur
+    ~Arme();               // Déclaration du destructeur
 };

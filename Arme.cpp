@@ -1,10 +1,13 @@
-//
-// Created by ad on 13/11/24.
-//
+// Arme.cpp
 #include "Arme.h"
-Arme::Arme(string n, int v){
-    Arme::nom=n;
-    Arme::valeur=v;}
+
+// Constructeur de Arme
+Arme::Arme(string n, int v) {
+    nom = n;
+    valeur = v;
+}
+
+// Destructeur de Arme
 Arme::~Arme() {
-    cout << "Entité détruite" << endl;
+    cout << "Arme détruite" << endl;
 }

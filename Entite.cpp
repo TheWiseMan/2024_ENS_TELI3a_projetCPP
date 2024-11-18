@@ -1,27 +1,32 @@
-//
-// Created by ad on 13/11/24.
-//
 // Entite.cpp
 #include "Entite.h"
 using namespace std;
 
 // Constructeur de Entite
-Entite::Entite(int pv, int atk) {
-    Entite::PV=pv;
-    Entite::PVmax=pv;
-    Entite::attaque=atk;}
+Entite::Entite(int pv, int atk): PV(pv), PVmax(pv), attaque(atk), armure("Aucune", 0), arme("Aucune", 0) {
+}
 
-// Destructeur virtuel de Entite
+// Destructeur de Entite
 Entite::~Entite() {
     cout << "Entité détruite" << endl;
 }
 
-// Méthode pour changer l'armure
-void Entite::changerArmure(const string& nom, int valeur) {
-    cout << "Changement d'armure en " << nom << " avec valeur " << valeur << endl;
+void Entite::afficher(){
+    cout<<"PV"<<Entite::PV<<endl;
+    cout<<"atk"<<Entite::attaque<<endl;
 }
+int Entite::défendre(int atk){
+    return Entite::PV-atk;
+};
 
-// Méthode pour changer l'arme
-void Entite::changerArme(const string& nom, int valeur) {
-    cout << "Changement d'arme en " << nom << " avec valeur " << valeur << endl;
+
+
+void Entite::changerArmure(string nom, int atk){
+    armure.nom=nom;
+    armure.valeur=atk;
+
+}
+void Entite::changerArme(string nom, int atk){
+    arme.nom=nom;
+    arme.valeur=atk;
 }
