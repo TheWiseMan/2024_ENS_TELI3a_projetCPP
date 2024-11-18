@@ -2,12 +2,26 @@ compile = g++
 mainfile = ./src/main.cpp
 outputex = ./bin/main
 classfiles = $(wildcard ./src/*.cpp)
-objfiles = $(wildcard ./obj/*.o)
+objfiles = $(patsubst ./src/%.cpp,./obj/%.o,$(classfiles))
+basefiles = $(patsubst ./src/%.cpp,%,$(classfiles))
 
 # Linking
-$(outputex): ./obj/main.o
-	gcc -o $(outputex) $(objfiles) -lstdc++
+$(outputex): $(basefiles)
+	gcc -o $(outputex) ./obj/*.o -lstdc++
 
 # Compiling
-./obj/main.o: $(classfiles)
-	$(compile) -o $@ -c ./$^ -Wall
+$(basefiles):
+	$(compile) -o ./obj/$@.o -c ./src/$@.cpp -Wall
+
+test: $(outputex)
+	@chmod +x $(outputex)
+	@cd ./res
+	@$(outputex)
+
+clean:
+	rm ./obj/*
+	rm ./bin/*
+
+debug:
+	@echo $(classfiles);
+	@echo $(objfiles);
