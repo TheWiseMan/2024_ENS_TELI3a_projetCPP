@@ -1,25 +1,30 @@
 #include <iostream>
 #include <filesystem>
+#include <fstream>
 
-#define version "0.0.12"
+#define version "0.0.2"
 
 #include "GoldReader.h"
+#include "Utils.h"
+#include "Entity.h"
 
-namespace Utils {
-    void displayMap(std::map<std::string, std::string> map) {
-        for (auto &&entry : map)
-        {
-            std::cout << entry.first + " : " + entry.second << std::endl;
-        }
-    }
-};
+using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    Utils::displayMap(GoldReader::parse("salut").front());
-    std::cout << "Current path is " << std::filesystem::current_path().string()
-         << std::endl;
-    std::cout << "Hello World !" << std::endl;
-    std::cout << "Goodbye World !" << std::endl;
+
+    fstream characterssheet("./characters.gold");
+    stringstream buffer;
+    buffer << characterssheet.rdbuf();
+    std::list<std::map<std::string, std::string>> result = GoldReader::parseList(buffer.str());
+    characterssheet.close();
+
+
+    for (auto &&item : result)
+    {
+        Utils::displayMap(item);
+    }
+
+    //std::cout << "Current path is " << std::filesystem::current_path().string() << std::endl;
     return 0;
 }

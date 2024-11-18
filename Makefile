@@ -14,8 +14,7 @@ $(basefiles):
 
 test: $(outputex)
 	@chmod +x $(outputex)
-	@cd ./res
-	@$(outputex)
+	@cd ./res; ../$(outputex)
 
 clean:
 	rm ./obj/*
