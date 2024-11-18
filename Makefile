@@ -6,7 +6,7 @@ objfiles = $(wildcard ./obj/*.o)
 
 # Linking
 $(outputex): ./obj/main.o
-	gcc -o $(outputex) $(objfiles)
+	gcc -o $(outputex) $(objfiles) -lstdc++
 
 # Compiling
 ./obj/main.o: $(classfiles)
