@@ -28,7 +28,7 @@ public:
     int def = 0;
     EntityBuilder() {};
     EntityBuilder(EntityBuilder &other, object config);
-    Entity *create(map<string, string> instconfig = {});
+    Entity create(map<string, string> instconfig = {});
 };
 
 /*class RandomEntityBuilder
@@ -58,7 +58,8 @@ class EntityLibrary
 {
 public:
     void add(object config);
-    Entity *create(string entitytype, map<string, string> instconfig);
+    Entity create(string entitytype, map<string, string> instconfig);
+    Entity create(string entitytype);
     void debug();
 
 private:

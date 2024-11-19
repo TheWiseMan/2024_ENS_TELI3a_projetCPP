@@ -9,3 +9,10 @@ atk::100
 def::0
 maxHP::120
 type::simpleEntity
+----
+name::WiseMan
+type::simpleEntity
+description::Really the best man ever
+atk::0
+def::1000
+maxHP::1000

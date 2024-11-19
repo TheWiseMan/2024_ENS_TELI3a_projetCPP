@@ -1,8 +1,9 @@
 compile = g++
 outputex = ./bin/main
-flags = -lstdc++ -lstdc++fs
+flags = -static -lstdc++ -lstdc++fs -lncurses
 classfiles = $(wildcard ./src/*.cpp)
 basefiles = $(patsubst ./src/%.cpp,./obj/%.o,$(classfiles))
+version = $(shell head -1 ./src/main.cpp | sed 's/#define version //g' | sed 's/"//g' | sed -e s/\\./_/g | cat)
 
 # Linking
 $(outputex): $(basefiles)
@@ -18,6 +19,9 @@ $(outputex): $(basefiles)
 test: $(outputex)
 	@chmod +x $(outputex)
 	@cd ./res; ../$(outputex)
+
+archive: $(outputex)
+	cp $(outputex) ./exarchive/archive_$(version)
 
 clean:
 	rm ./obj/*

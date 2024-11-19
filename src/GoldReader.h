@@ -4,6 +4,8 @@
 #include <iostream>
 #include <list>
 
+/** String reader for Group1 Object List Data
+ */
 class GoldReader
 {
 public:
