@@ -1,6 +1,6 @@
 compile = g++
 outputex = ./bin/main
-flags = -static -lstdc++ -lstdc++fs -lncurses
+flags = -lstdc++ -lstdc++fs -lncursesw
 classfiles = $(wildcard ./src/*.cpp)
 basefiles = $(patsubst ./src/%.cpp,./obj/%.o,$(classfiles))
 version = $(shell head -1 ./src/main.cpp | sed 's/#define version //g' | sed 's/"//g' | sed -e s/\\./_/g | cat)

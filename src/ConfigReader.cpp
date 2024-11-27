@@ -1,4 +1,4 @@
-#include "ConfigReader.h"
+#include "ConfigReader.hpp"
 
 objectlist ConfigReader::readEntitiesConfig(string filename) {
     fstream characterssheet("./characters.gold");

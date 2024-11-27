@@ -1,4 +1,4 @@
-#include "./GoldReader.h"
+#include "./GoldReader.hpp"
 
 using namespace std;
 

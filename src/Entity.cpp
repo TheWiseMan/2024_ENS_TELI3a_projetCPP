@@ -1,5 +1,5 @@
-#include "Entity.h"
-#include "Utils.h"
+#include "Entity.hpp"
+#include "Utils.hpp"
 
 EntityBuilder::EntityBuilder(EntityBuilder& other, object config)
 {

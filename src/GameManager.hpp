@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GameConfig.h"
-#include "Entity.h"
+#include "GameConfig.hpp"
+#include "Entity.hpp"
 
 class GameManager
 {

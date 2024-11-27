@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "GoldReader.h"
+#include "GoldReader.hpp"
 
 class ConfigReader {
     public:
