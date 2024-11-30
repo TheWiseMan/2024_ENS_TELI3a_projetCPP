@@ -92,7 +92,7 @@ void MainWindow::refresh(GameManager mgr, UserInterface *interface)
         mvwprintw(win, 4 + i, 1, "\t%-20s ", choices[i].c_str());
     }
 
-    mvwprintw(win, this->height / 2, 2, "Salut à tous");
+    mvwprintw(win, this->height / 2, 2, "Salut à tous\nComment ça va ?");
 
     // whline(this->win, '─', 4);
 
