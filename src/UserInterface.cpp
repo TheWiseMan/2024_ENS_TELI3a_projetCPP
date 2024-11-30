@@ -26,6 +26,11 @@ void UserInterface::init()
     curs_set(FALSE);
 }
 
+void UserInterface::destroy() {
+    clrtoeol();
+    endwin();
+}
+
 void UserInterface::refresh(GameManager mgr)
 {
     this->windows[this->currentWindow]->refresh(mgr, this);

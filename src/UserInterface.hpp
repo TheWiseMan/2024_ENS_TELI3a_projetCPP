@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <ncurses.h>
 #include "GameManager.hpp"
@@ -15,6 +16,7 @@ class UserInterface
 public:
     UserInterface();
     void init();
+    void destroy();
     int currentWindow = 0;
     vector<InterfaceWindow *> windows;
     void refresh(GameManager mgr);
