@@ -26,7 +26,8 @@ void UserInterface::init()
     curs_set(FALSE);
 }
 
-void UserInterface::destroy() {
+void UserInterface::destroy()
+{
     clrtoeol();
     endwin();
 }
@@ -43,6 +44,19 @@ MainWindow::MainWindow(UserInterface i)
     this->win = newwin(this->height, this->width, this->top, this->left);
     keypad(win, TRUE);
     box(win, 0, 0);
+}
+
+void printLeftAlignedText(WINDOW *win, int yoffset, int xoffset, string text)
+{
+
+    std::stringstream ss(text);
+    std::string to;
+
+    int y = yoffset;
+    while (std::getline(ss, to, '\n'))
+    {
+        mvwprintw(win, y++, xoffset, "%s", to.c_str());
+    }
 }
 
 void MainWindow::refresh(GameManager mgr, UserInterface *interface)
@@ -81,7 +95,7 @@ void MainWindow::refresh(GameManager mgr, UserInterface *interface)
 
     int nChoices = 3;
     string choices[nChoices] = {
-        "FIGHT",
+        "ATTACK",
         "SKILL",
         "ITEM"};
 
@@ -97,7 +111,9 @@ void MainWindow::refresh(GameManager mgr, UserInterface *interface)
         mvwprintw(win, 4 + i, 1, "\t%-20s ", choices[i].c_str());
     }
 
-    mvwprintw(win, this->height / 2, 2, "Salut à tous\nComment ça va ?");
+    printLeftAlignedText(win, 2, this->width/2, "                           .oMc\n                        .MMMMMP\n                      .MM888MM\n....                .MM88888MP\nMMMMMMMMb.         d8MM8tt8MM\n MM88888MMMMc `:' dMME8ttt8MM\n  MM88tt888EMMc:dMM8E88tt88MP\n   MM8ttt888EEM8MMEEE8E888MC\n   `MM888t8EEEM8MMEEE8t8888Mb\n    \"MM88888tEM8\"MME88ttt88MM\n     dM88ttt8EM8\"MMM888ttt8MM\n     MM8ttt88MM\" \" \"MMNICKMM\"\n     3M88888MM\"      \"MMMP\"\n      \"MNICKM\"\n");
+
+    printLeftAlignedText(win, this->height / 2, 2, "Salut à tous\nComment ça va ?");
 
     // whline(this->win, '─', 4);
 

@@ -48,7 +48,7 @@ public:
     Entity *create(map<string, string> instconfig);
 };*/
 
-const map<string, EntityBuilder> DEFAULT_CHARACTER_TYPES = {
+const map<string, EntityBuilder> DEFAULT_SCENE_TYPE = {
     {"simpleEntity", EntityBuilder()}};
 
 /**
@@ -63,5 +63,5 @@ public:
     void debug();
 
 private:
-    map<string, EntityBuilder> registry = DEFAULT_CHARACTER_TYPES;
+    map<string, EntityBuilder> registry = DEFAULT_SCENE_TYPE;
 };
