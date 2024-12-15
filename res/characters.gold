@@ -16,3 +16,6 @@ description::Really the best man ever
 atk::0
 def::1000
 maxHP::1000
+----
+name::The One
+type::simpleEntity

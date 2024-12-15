@@ -1,4 +1,5 @@
 #include "GameManager.hpp"
+// #include "Utils.hpp"
 
 void GameManager::load()
 {
@@ -9,21 +10,33 @@ void GameManager::load()
     {
         this->entityLibrary->add(entitydef);
     }
+
+    // Utils::displayMap(this->config.adventureconfig);
+    this->currentScene = Scene::fromObjectList(GoldReader::parseFile(this->config.adventureconfig.at("startingScene")), this);
     cout << "Game loaded !" << endl;
-    this->interface = new UserInterface();
 }
 
 void GameManager::start()
 {
-    MainWindow w2 = MainWindow(*this->interface);
-
-    this->interface->windows.push_back(&w2);
-    while (1)
+    this->running = true;
+    this->interface->init();
+    while (this->running)
     {
-        this->interface->refresh(*this);
+        this->interface->refresh(this);
     }
 }
 
-void GameManager::end() {
+void GameManager::end()
+{
+    delete this->currentScene;
     this->interface->destroy();
+}
+
+void GameManager::fireEvent(object event)
+{
+    if (!event.count("action"))
+    {
+        cerr << "Invalid event" << endl;
+    }
+    this->events[event.at("action")]->fire(this, event);
 }

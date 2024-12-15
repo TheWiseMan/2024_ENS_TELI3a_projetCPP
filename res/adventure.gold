@@ -1,1 +1,3 @@
-name::s
+name::Holy quest against the light
+startingScene::scene_0.gold
+entities::characters.gold

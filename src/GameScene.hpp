@@ -1,41 +1,23 @@
+#pragma once
 #include <map>
 #include <string>
-#include <list>
-
+#include <vector>
+#include "GameManager.hpp"
+#include "Entity.hpp"
 using namespace std;
 typedef map<string, string> object;
 
 class Scene
 {
-    string name;
-    string type;
+public:
+    static Scene *fromObjectList(objectlist config, GameManager *gm);
+    virtual ~Scene() = 0;
+    object config;
+    vector<object> options;
 };
 
 class SceneFactory
 {
 public:
-    virtual Scene create(object config) const;
-};
-
-class StorySceneFactory : public SceneFactory
-{
-public:
-    Scene create(object config) const;
-};
-
-const map<string, SceneFactory*> SCENE_FACTORIES = {
-    {"story", new StorySceneFactory()}};
-
-const map<string, Scene> DEFAULT_SCENES = {
-    {"simpleEntity", Scene()}};
-
-class SceneLibrary
-{
-public:
-    void add(object config);
-    Scene create(string sceneId);
-    void debug();
-
-private:
-    map<string, Scene> DEFAULT_SCENES;
+    virtual Scene *create(objectlist config, GameManager *gm) const = 0;
 };

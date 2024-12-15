@@ -1,19 +1,27 @@
 #include "Entity.hpp"
-#include "Utils.hpp"
 
-EntityBuilder::EntityBuilder(EntityBuilder& other, object config)
+EntityBuilder::EntityBuilder(EntityBuilder *other, object config)
 {
-    if (config.count("maxHP")) this->maxHP = stoi(config.at("maxHP"));
-    if (config.count("atk")) this->atk = stoi(config.at("atk"));
-    if (config.count("def")) this->def = stoi(config.at("def"));
+    this->maxHP = other->maxHP;
+    this->hp = other->hp;
+    this->def = other->def;
+    this->atk = other->atk;
+    if (config.count("maxHP"))
+        this->maxHP = stoi(config.at("maxHP"));
+    this->hp = this->maxHP;
+    if (config.count("atk"))
+        this->atk = stoi(config.at("atk"));
+    if (config.count("def"))
+        this->def = stoi(config.at("def"));
 }
 
-Entity EntityBuilder::create(map<string, string> instconfig)
+Entity *EntityBuilder::create(map<string, string> instconfig)
 {
-    Entity e = Entity();
-    e.maxHP = this->maxHP;
-    e.atk = this->atk;
-    e.def = this->def;
+    Entity *e = new Entity();
+    e->maxHP = this->maxHP;
+    e->hp = this->hp;
+    e->atk = this->atk;
+    e->def = this->def;
     return e;
 }
 
@@ -27,23 +35,44 @@ void EntityLibrary::add(object config)
     {
         cerr << "An entity must have a name" << endl;
     }
-    EntityBuilder copy(this->registry.at(config.at("type")), config);
+    EntityBuilder *copy = new EntityBuilder(this->registry.at(config.at("type")), config);
     this->registry[config.at("name")] = copy;
 }
 
-Entity EntityLibrary::create(string entitytype, map<string, string> instconfig = {})
+Entity *EntityLibrary::create(string entitytype, map<string, string> instconfig = {})
 {
-    return this->registry.at(entitytype).create(instconfig);
+    if (!this->registry.count(entitytype))
+    {
+        cerr << "Entity not found '" << entitytype << "'" << endl;
+    }
+    return this->registry.at(entitytype)->create(instconfig);
 }
-Entity EntityLibrary::create(string entitytype)
+Entity *EntityLibrary::create(string entitytype)
 {
-    return this->registry.at(entitytype).create();
+    if (!this->registry.count(entitytype))
+    {
+        cerr << "Entity not found '" << entitytype << "'" << endl;
+    }
+    return this->registry.at(entitytype)->create();
 }
 
-void EntityLibrary::debug() {
+void EntityLibrary::debug()
+{
     for (auto &&i : this->registry)
     {
         cout << i.first << endl;
     }
-    
+}
+
+DamageDescriptor Entity::dealDamage(Entity *other)
+{
+    DamageDescriptor dd;
+    dd.dmg = this->atk;
+    other->takeDamage(dd);
+    return dd;
+}
+
+void Entity::takeDamage(DamageDescriptor dd)
+{
+    this->hp -= dd.dmg;
 }

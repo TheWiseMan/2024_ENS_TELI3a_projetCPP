@@ -1,6 +1,18 @@
 #include "./GoldReader.hpp"
+#include <fstream>
+#include <filesystem>
 
 using namespace std;
+
+objectlist GoldReader::parseFile(string filepath)
+{
+    fstream goldfile(filepath);
+    stringstream buffer;
+    buffer << goldfile.rdbuf();
+    objectlist result = GoldReader::parseList(buffer.str());
+    goldfile.close();
+    return result;
+}
 
 map<string, string> GoldReader::parseObject(string textToParse)
 {
@@ -34,9 +46,9 @@ list<map<string, string>> GoldReader::parseList(string textToParse)
     size_t block_end = textToParse.find("\n----\n");
     while (block_end != string::npos)
     {
-        if (block_end)
-        output.push_back(parseObject(textToParse.substr(reference, block_end)));
-        reference = block_end+6;
+        string t = textToParse.substr(reference, block_end-reference);
+        output.push_back(parseObject(t));
+        reference = block_end + 6;
         block_end = textToParse.find("\n----\n", reference);
     }
     output.push_back(parseObject(textToParse.substr(reference)));

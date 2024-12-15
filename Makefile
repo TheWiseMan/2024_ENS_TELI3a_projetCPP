@@ -20,6 +20,10 @@ test: $(outputex)
 	@chmod +x $(outputex)
 	@cd ./res; ../$(outputex)
 
+mem: $(outputex)
+	@chmod +x $(outputex)
+	@cd ./res; valgrind --leak-check=full --show-leak-kinds=all ../$(outputex)
+
 archive: $(outputex)
 	cp $(outputex) ./exarchive/archive_$(version)
 

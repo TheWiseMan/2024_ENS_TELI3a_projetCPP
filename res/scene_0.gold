@@ -1,0 +1,12 @@
+displayname::The beginning
+type::dialog
+interlocutor::The One
+text::Do you hear me little one ?
+----
+name::Yes
+action::goto
+scene::scene_1.gold
+----
+name::...
+action::goto
+scene::scene_00.gold

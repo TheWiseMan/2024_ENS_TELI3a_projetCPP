@@ -1,47 +1,48 @@
 #pragma once
 #include <vector>
 #include <ncurses.h>
-#include "GameManager.hpp"
+#include <sstream>
+#include "GameView.hpp"
 
 using namespace std;
-
-class InterfaceWindow;
 
 /**
  * Design : a State machine, where transitions are user inputs and states are self sufficient for displaying
  */
+class CursesInterface;
 
-class UserInterface
+class CursesInterfaceSceneWindow
 {
 public:
-    UserInterface();
+    virtual void refresh(GameManager *mgr, CursesInterface *interface) = 0;
+};
+
+class CursesInterface : public GameView
+{
+public:
     void init();
     void destroy();
-    int currentWindow = 0;
-    vector<InterfaceWindow *> windows;
-    void refresh(GameManager mgr);
-};
-
-class InterfaceWindow
-{
-public:
-    int top = 0;
-    int left = 0;
-    int width = 64;
-    int height = 32;
-    InterfaceWindow();
-    InterfaceWindow(UserInterface interface, int _width, int _height);
+    void refresh(GameManager *gm);
+    map<string, CursesInterfaceSceneWindow *> windows;
     WINDOW *win;
-    virtual void refresh(GameManager mgr, UserInterface *interface) = 0;
+    int height = 32;
+    int width = 64;
+    int choice = 0;
+
+private:
+    WINDOW *screen;
 };
 
-#define WIDTH 50
-#define HEIGHT 10
-
-class MainWindow : public InterfaceWindow
+/*class CombatWindow : public CursesInterfaceSceneWindow
 {
 public:
-    int choice = 0;
-    MainWindow(UserInterface interface);
-    void refresh(GameManager mgr, UserInterface *interface);
+    CombatWindow(CursesInterface *interface);
+    void refresh(GameManager *mgr, CursesInterface *interface);
+};*/
+
+class DialogWindow : public CursesInterfaceSceneWindow
+{
+public:
+    DialogWindow();
+    void refresh(GameManager *mgr, CursesInterface *interface);
 };

@@ -1,3 +1,4 @@
+#pragma once
 #include "GameManager.hpp"
 /**
  * An event that updates the GameManager (ie, any action,
@@ -6,5 +7,17 @@
 class GameEvent
 {
 public:
-    virtual int fire(GameManager *gm);
+    virtual void fire(GameManager *gm, object config) = 0;
+};
+
+class ChangeSceneEvent : public GameEvent
+{
+public:
+    void fire(GameManager *gm, object config);
+};
+
+class EndGameEvent : public GameEvent
+{
+public:
+    void fire(GameManager *gm, object config);
 };
