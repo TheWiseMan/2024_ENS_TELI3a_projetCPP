@@ -2,8 +2,8 @@ displayname::The beginning
 type::dialog
 interlocutor::The One
 text::So, you're a Healer ?
-Although not usually fit for close-range combat, 
+Although not usually fit for close-range combat, let's see what you can do !
 ----
-name::continue
+name::I feel quite healthy
 action::goto
 scene::scene_2.gold

@@ -25,6 +25,6 @@ maxHP::15
 atk::2
 critRate::0.5
 critMult::2
-agility::0.7
+agility::0.3
 action::goto
-scene::scene_2.gold
+scene::scene_character_rogue.gold

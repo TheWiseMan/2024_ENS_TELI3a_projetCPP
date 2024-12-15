@@ -16,3 +16,11 @@ void EndGameEvent::fire(GameManager *gm, object config)
 {
     gm->running = false;
 }
+
+void RegeneratePlaverEvent::fire(GameManager *gm, object config)
+{
+    gm->playerEntity->isAlive = true;
+    gm->playerEntity->hp = gm->playerEntity->maxHP;
+    gm->playerEntity->mp = gm->playerEntity->maxMP;
+
+}

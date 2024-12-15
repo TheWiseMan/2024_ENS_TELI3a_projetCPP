@@ -16,5 +16,5 @@ void GameConfig::read()
         exit(1);
     }
     //cout << this->adventureconfig.at("entities") << endl;
-    this->entitiesconfig = GoldReader::parseFile(this->adventureconfig.at("entities"));
+    //this->entitiesconfig = GoldReader::parseFile(this->adventureconfig.at("entities"));
 }

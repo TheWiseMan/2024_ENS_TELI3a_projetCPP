@@ -1,0 +1,8 @@
+displayname::The beginning
+type::dialog
+interlocutor::ADMIN
+text::This is the end of this demo, but there will be more
+action::regen
+----
+name::I'll be back !
+action::endgame

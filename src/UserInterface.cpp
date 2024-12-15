@@ -132,6 +132,8 @@ void CombatWindow::refresh(GameManager *mgr, CursesInterface *interface)
     vector<object> outcomes = mgr->currentScene->options;
     auto actions = mgr->playerEntity->actions;
     int nChoices = actions->size();
+    interface->choice = (interface->choice + nChoices) % nChoices;
+    printLeftAlignedText(interface->win, 0, 5, scene_conf.at("displayname"));
     mvwprintw(interface->win, 2, 1, "HP ");
     for (int i = 0; i < mgr->playerEntity->maxHP; i++)
     {
@@ -246,6 +248,8 @@ void DialogWindow::refresh(GameManager *mgr, CursesInterface *interface)
     object scene_conf = mgr->currentScene->config;
     vector<object> options = mgr->currentScene->options;
     int nChoices = options.size();
+    interface->choice = (interface->choice + nChoices) % nChoices;
+    printLeftAlignedText(interface->win, 0, 5, scene_conf.at("displayname"));
     int i = 0;
     for (auto &c : options)
     {
@@ -294,6 +298,8 @@ void CharacterSelectionWindow::refresh(GameManager *mgr, CursesInterface *interf
     object scene_conf = mgr->currentScene->config;
     vector<object> options = mgr->currentScene->options;
     int nChoices = options.size();
+    interface->choice = (interface->choice + nChoices) % nChoices;
+    printLeftAlignedText(interface->win, 0, 5, scene_conf.at("displayname"));
     int i = 0;
     for (auto &c : options)
     {

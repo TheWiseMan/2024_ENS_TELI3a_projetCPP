@@ -25,6 +25,7 @@ void GameManager::end()
 {
     delete this->currentScene;
     this->interface->destroy();
+    cout << "Game ended !" << endl;
 }
 
 void GameManager::fireEvent(object event)

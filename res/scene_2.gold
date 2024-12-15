@@ -8,7 +8,8 @@ description::Really the best man ever
 maxHP::10
 atk::2
 ----
-action::endgame
+action::goto
+scene::scene_20.gold
 ----
 action::goto
-scene::scene_1.gold
+scene::scene_21.gold

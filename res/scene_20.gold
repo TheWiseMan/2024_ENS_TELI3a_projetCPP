@@ -1,0 +1,13 @@
+displayname::The beginning
+type::dialog
+interlocutor::The One
+text::Congratulations !
+I sure hope it wasn't a stroke of luck.
+----
+name::Obviously not !
+action::goto
+scene::scene_3.gold
+----
+name::I'd like to try with another class...
+action::goto
+scene::character_selection.gold

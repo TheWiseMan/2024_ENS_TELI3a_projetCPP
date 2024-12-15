@@ -16,7 +16,8 @@ public:
     void fire(GameManager *gm, object config);
 };
 
-class AttackEnemyEvent : public GameEvent {
+class AttackEnemyEvent : public GameEvent
+{
 public:
     void fire(GameManager *gm, object config);
 };
@@ -26,3 +27,12 @@ class EndGameEvent : public GameEvent
 public:
     void fire(GameManager *gm, object config);
 };
+
+class RegeneratePlaverEvent : public GameEvent
+{
+
+public:
+    void fire(GameManager *gm, object config);
+};
+
+// class BuffAtkEvent(config.amount), class BuffDefEvent(config.amount)

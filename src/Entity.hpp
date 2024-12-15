@@ -34,12 +34,15 @@ public:
     string name;
     vector<EntityAction *> *actions;
     bool isAlive = true;
-    int maxHP = 1;
+    int maxHP = 5;
     int atk = 0;
     int def = 0;
-    int hp = 1;
+    int hp = 5;
     int mp = 5;
     int maxMP = 5;
+    int atkBuff = 0; // used by weapons and potions for example
+    int hpBuff = 0;
+    int defBuff = 0;
     float critRate = 0.0;
     float critMult = 1;
     float agility = 0.0;
@@ -89,7 +92,7 @@ class SimpleEntityFactory : public EntityFactory
     int maxHP = 5;
     int atk = 0;
     int def = 0;
-    int hp = 1;
+    int hp = 5;
     int mp = 5;
     int maxMP = 5;
     float critRate = 0.0;
@@ -106,7 +109,7 @@ class PlayerEntityFactory : public SimpleEntityFactory
     int maxHP = 10;
     int atk = 1;
     int def = 0;
-    int hp = 1;
+    int hp = 10;
     int mp = 5;
     int maxMP = 5;
     float critRate = 0.0;
@@ -121,7 +124,7 @@ class HealerPlayerEntityFactory : public SimpleEntityFactory
     int maxHP = 10;
     int atk = 0;
     int def = 0;
-    int hp = 1;
+    int hp = 10;
     int mp = 5;
     int maxMP = 5;
     float critRate = 0.0;

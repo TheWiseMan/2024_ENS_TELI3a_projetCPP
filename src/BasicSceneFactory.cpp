@@ -5,6 +5,10 @@ Scene *DialogSceneFactory::create(objectlist config, GameManager *gm) const
 {
     object s = config.front();
     config.pop_front();
+    if (s.count("action"))
+    {
+        gm->fireEvent(s);
+    }
     if (!s.count("interlocutor"))
     {
         cerr << "A dialog scene needs an interlocutor entity" << endl;
@@ -22,6 +26,10 @@ Scene *CombatSceneFactory::create(objectlist config, GameManager *gm) const
 {
     object s = config.front();
     config.pop_front();
+    if (s.count("action"))
+    {
+        gm->fireEvent(s);
+    }
     CombatScene *scene = new CombatScene();
     scene->config = s;
 
@@ -43,7 +51,11 @@ Scene *characterSelectionSceneFactory::create(objectlist config, GameManager *gm
 {
     object s = config.front();
     config.pop_front();
-    
+    if (s.count("action"))
+    {
+        gm->fireEvent(s);
+    }
+
     DialogScene *scene = new DialogScene();
     scene->config = s;
     for (auto const &optionobj : config)

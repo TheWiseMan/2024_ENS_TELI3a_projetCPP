@@ -19,7 +19,7 @@ void EntityActionHealSelf::execute(GameManager *gm, Entity *self, object arg)
     if (self->mp)
     {
         self->hp += 5;
-        self->hp = max(self->hp, self->maxHP);
+        self->hp = max(self->hp, self->maxHP + self->hpBuff);
         self->mp--;
     }
 }
@@ -106,7 +106,7 @@ Entity *PlayerEntityFactory::create(map<string, string> instconfig)
     if (instconfig.count("critMult"))
     {
         stringstream(instconfig.at("critMult")) >> e->critMult;
-        //e->critMult = stof(instconfig.at("critMult"));
+        // e->critMult = stof(instconfig.at("critMult"));
     }
     if (instconfig.count("agility"))
     {
@@ -168,11 +168,11 @@ DamageDescriptor SimpleEntity::dealDamage(Entity *other)
 
     if (RANDOM_GENERATOR->getRandom() < this->critRate)
     {
-        dd.dmg = floor(this->atk * this->critMult);
+        dd.dmg = floor((this->atk + this->atkBuff) * this->critMult);
     }
     else
     {
-        dd.dmg = this->atk;
+        dd.dmg = this->atk + this->atkBuff;
     }
     other->takeDamage(dd);
     return dd;
@@ -184,7 +184,7 @@ void SimpleEntity::takeDamage(DamageDescriptor dd)
     {
         return;
     }
-    this->hp -= dd.dmg;
+    this->hp -= dd.dmg + this->def;
     if (this->hp <= 0)
     {
         this->isAlive = false;

@@ -1,0 +1,10 @@
+displayname::The beginning
+type::dialog
+interlocutor::The One
+text::Come on, don't feel down, I'm sure you can do it !
+Let's try again !
+action::regen
+----
+name::Ok !
+action::goto
+scene::scene_2.gold
