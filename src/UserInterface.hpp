@@ -33,16 +33,20 @@ private:
     WINDOW *screen;
 };
 
-/*class CombatWindow : public CursesInterfaceSceneWindow
+class CombatWindow : public CursesInterfaceSceneWindow
 {
 public:
-    CombatWindow(CursesInterface *interface);
     void refresh(GameManager *mgr, CursesInterface *interface);
-};*/
+};
 
 class DialogWindow : public CursesInterfaceSceneWindow
 {
 public:
-    DialogWindow();
+    void refresh(GameManager *mgr, CursesInterface *interface);
+};
+
+class CharacterSelectionWindow : public CursesInterfaceSceneWindow
+{
+public:
     void refresh(GameManager *mgr, CursesInterface *interface);
 };

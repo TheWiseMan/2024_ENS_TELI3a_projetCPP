@@ -5,6 +5,8 @@ class Scene;
 class SceneFactory;
 class GameEvent;
 class GameView;
+class Entity;
+class EntityFactory;
 
 #include "GameView.hpp"
 #include "GameScene.hpp"
@@ -17,11 +19,12 @@ class GameManager
 public:
     GameConfig config;
     map<string, SceneFactory *> sceneFactories;
-    EntityLibrary *entityLibrary;
+    map<string, EntityFactory *> entityFactories;
     Scene *currentScene;
     GameView *interface;
-    map<string, GameEvent*> events;
-    Entity * playerEntity;
+    map<string, GameEvent *> events;
+    Entity *playerEntity;
+    Entity *currentEnemy;
     bool running = false;
     void fireEvent(object event);
     void load();

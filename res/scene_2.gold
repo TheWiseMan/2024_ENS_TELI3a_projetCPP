@@ -1,0 +1,14 @@
+displayname::The beginning
+type::combat
+text::It seem you have to kill this innocent orc.
+----
+name::Random Orc passing by
+type::simpleEntity
+description::Really the best man ever
+maxHP::10
+atk::2
+----
+action::endgame
+----
+action::goto
+scene::scene_1.gold

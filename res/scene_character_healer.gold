@@ -1,0 +1,9 @@
+displayname::The beginning
+type::dialog
+interlocutor::The One
+text::So, you're a Healer ?
+Although not usually fit for close-range combat, 
+----
+name::continue
+action::goto
+scene::scene_2.gold

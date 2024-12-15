@@ -1,3 +1,9 @@
+# Pour voir la démo
+
+```sh
+make test
+```
+
 # Pour compiler
 
 ```sh

@@ -1,78 +1,193 @@
 #include "Entity.hpp"
+#include "RandomGenerator.hpp"
+#include <sstream>
+#include <string>
 
-EntityBuilder::EntityBuilder(EntityBuilder *other, object config)
+RandomGenerator *RANDOM_GENERATOR = new RandomGenerator();
+
+void EntityActionAttackPlayer::execute(GameManager *gm, Entity *self, object arg)
 {
-    this->maxHP = other->maxHP;
-    this->hp = other->hp;
-    this->def = other->def;
-    this->atk = other->atk;
-    if (config.count("maxHP"))
-        this->maxHP = stoi(config.at("maxHP"));
-    this->hp = this->maxHP;
-    if (config.count("atk"))
-        this->atk = stoi(config.at("atk"));
-    if (config.count("def"))
-        this->def = stoi(config.at("def"));
+    self->dealDamage(gm->playerEntity);
 }
 
-Entity *EntityBuilder::create(map<string, string> instconfig)
+void EntityActionAttackEnemy::execute(GameManager *gm, Entity *self, object arg)
 {
-    Entity *e = new Entity();
+    self->dealDamage(gm->currentEnemy);
+}
+void EntityActionHealSelf::execute(GameManager *gm, Entity *self, object arg)
+{
+    if (self->mp)
+    {
+        self->hp += 5;
+        self->hp = max(self->hp, self->maxHP);
+        self->mp--;
+    }
+}
+
+Entity *SimpleEntityFactory::create(map<string, string> instconfig)
+{
+    SimpleEntity *e = new SimpleEntity();
+    e->name = instconfig.at("name");
+    e->actions = &this->actions;
     e->maxHP = this->maxHP;
     e->hp = this->hp;
     e->atk = this->atk;
     e->def = this->def;
+    e->agility = this->agility;
+    e->critMult = this->critMult;
+    e->critRate = this->critRate;
+    if (instconfig.count("maxHP"))
+    {
+        e->maxHP = stoi(instconfig.at("maxHP"));
+        e->hp = e->maxHP;
+    }
+    if (instconfig.count("atk"))
+    {
+        e->atk = stoi(instconfig.at("atk"));
+    }
+    if (instconfig.count("def"))
+    {
+        e->def = stoi(instconfig.at("def"));
+    }
+    if (instconfig.count("maxMP"))
+    {
+        e->maxMP = stoi(instconfig.at("maxMP"));
+        e->mp = e->maxMP;
+    }
+    if (instconfig.count("critRate"))
+    {
+        stringstream(instconfig.at("critRate")) >> e->critRate;
+    }
+    if (instconfig.count("critMult"))
+    {
+        stringstream(instconfig.at("critMult")) >> e->critMult;
+    }
+    if (instconfig.count("agility"))
+    {
+        stringstream(instconfig.at("agility")) >> e->agility;
+    }
+
+    return e;
+}
+Entity *PlayerEntityFactory::create(map<string, string> instconfig)
+{
+    SimpleEntity *e = new SimpleEntity();
+    e->name = instconfig.at("name");
+    e->actions = &this->actions;
+    e->maxHP = this->maxHP;
+    e->hp = this->hp;
+    e->atk = this->atk;
+    e->def = this->def;
+    e->agility = this->agility;
+    e->critMult = this->critMult;
+    e->critRate = this->critRate;
+    if (instconfig.count("maxHP"))
+    {
+        e->maxHP = stoi(instconfig.at("maxHP"));
+        e->hp = e->maxHP;
+    }
+    if (instconfig.count("atk"))
+    {
+        e->atk = stoi(instconfig.at("atk"));
+    }
+    if (instconfig.count("def"))
+    {
+        e->def = stoi(instconfig.at("def"));
+    }
+    if (instconfig.count("maxMP"))
+    {
+        e->maxMP = stoi(instconfig.at("maxMP"));
+        e->mp = e->maxMP;
+    }
+    if (instconfig.count("critRate"))
+    {
+        stringstream(instconfig.at("critRate")) >> e->critRate;
+    }
+    if (instconfig.count("critMult"))
+    {
+        stringstream(instconfig.at("critMult")) >> e->critMult;
+        //e->critMult = stof(instconfig.at("critMult"));
+    }
+    if (instconfig.count("agility"))
+    {
+        stringstream(instconfig.at("agility")) >> e->agility;
+    }
+
     return e;
 }
 
-void EntityLibrary::add(object config)
+Entity *HealerPlayerEntityFactory::create(map<string, string> instconfig)
 {
-    if (!config.count("type"))
+    SimpleEntity *e = new SimpleEntity();
+    e->name = instconfig.at("name");
+    e->actions = &this->actions;
+    e->maxHP = this->maxHP;
+    e->hp = this->hp;
+    e->atk = this->atk;
+    e->def = this->def;
+    e->agility = this->agility;
+    e->critMult = this->critMult;
+    e->critRate = this->critRate;
+    if (instconfig.count("maxHP"))
     {
-        cerr << "An entity must have a type" << endl;
+        e->maxHP = stoi(instconfig.at("maxHP"));
+        e->hp = e->maxHP;
     }
-    if (!config.count("name"))
+    if (instconfig.count("atk"))
     {
-        cerr << "An entity must have a name" << endl;
+        e->atk = stoi(instconfig.at("atk"));
     }
-    EntityBuilder *copy = new EntityBuilder(this->registry.at(config.at("type")), config);
-    this->registry[config.at("name")] = copy;
+    if (instconfig.count("def"))
+    {
+        e->def = stoi(instconfig.at("def"));
+    }
+    if (instconfig.count("maxMP"))
+    {
+        e->maxMP = stoi(instconfig.at("maxMP"));
+        e->mp = e->maxMP;
+    }
+    if (instconfig.count("critRate"))
+    {
+        stringstream(instconfig.at("critRate")) >> e->critRate;
+    }
+    if (instconfig.count("critMult"))
+    {
+        stringstream(instconfig.at("critMult")) >> e->critMult;
+    }
+    if (instconfig.count("agility"))
+    {
+        stringstream(instconfig.at("agility")) >> e->agility;
+    }
+
+    return e;
 }
 
-Entity *EntityLibrary::create(string entitytype, map<string, string> instconfig = {})
-{
-    if (!this->registry.count(entitytype))
-    {
-        cerr << "Entity not found '" << entitytype << "'" << endl;
-    }
-    return this->registry.at(entitytype)->create(instconfig);
-}
-Entity *EntityLibrary::create(string entitytype)
-{
-    if (!this->registry.count(entitytype))
-    {
-        cerr << "Entity not found '" << entitytype << "'" << endl;
-    }
-    return this->registry.at(entitytype)->create();
-}
-
-void EntityLibrary::debug()
-{
-    for (auto &&i : this->registry)
-    {
-        cout << i.first << endl;
-    }
-}
-
-DamageDescriptor Entity::dealDamage(Entity *other)
+DamageDescriptor SimpleEntity::dealDamage(Entity *other)
 {
     DamageDescriptor dd;
-    dd.dmg = this->atk;
+
+    if (RANDOM_GENERATOR->getRandom() < this->critRate)
+    {
+        dd.dmg = floor(this->atk * this->critMult);
+    }
+    else
+    {
+        dd.dmg = this->atk;
+    }
     other->takeDamage(dd);
     return dd;
 }
 
-void Entity::takeDamage(DamageDescriptor dd)
+void SimpleEntity::takeDamage(DamageDescriptor dd)
 {
+    if (this->agility > RANDOM_GENERATOR->getRandom())
+    {
+        return;
+    }
     this->hp -= dd.dmg;
+    if (this->hp <= 0)
+    {
+        this->isAlive = false;
+        this->hp = 0;
+    }
 }

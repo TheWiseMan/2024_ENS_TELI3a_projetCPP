@@ -4,4 +4,5 @@ interlocutor::The One
 text::Ah, there you are... I could not have waited any longer, you see.
 ----
 name::continue
-action::endgame
+action::goto
+scene::character_selection.gold

@@ -2,10 +2,11 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <list>
 #include "GameManager.hpp"
-#include "Entity.hpp"
 using namespace std;
 typedef map<string, string> object;
+typedef std::list<std::map<std::string, std::string>> objectlist;
 
 class Scene
 {

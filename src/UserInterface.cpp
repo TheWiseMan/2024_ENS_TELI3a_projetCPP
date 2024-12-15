@@ -124,8 +124,119 @@ void printLeftAlignedText(WINDOW *win, int yoffset, int xoffset, string text)
     }
 }*/
 
-DialogWindow::DialogWindow()
+void CombatWindow::refresh(GameManager *mgr, CursesInterface *interface)
 {
+    wclear(interface->win);
+    box(interface->win, 0, 0);
+    object scene_conf = mgr->currentScene->config;
+    vector<object> outcomes = mgr->currentScene->options;
+    auto actions = mgr->playerEntity->actions;
+    int nChoices = actions->size();
+    mvwprintw(interface->win, 2, 1, "HP ");
+    for (int i = 0; i < mgr->playerEntity->maxHP; i++)
+    {
+        if (i < mgr->playerEntity->hp)
+        {
+            wprintw(interface->win, "▰");
+        }
+        else
+        {
+            wprintw(interface->win, "▱");
+        }
+    }
+    mvwprintw(interface->win, 3, 1, "MP ");
+    for (int i = 0; i < mgr->playerEntity->maxMP; i++)
+    {
+        if (i < mgr->playerEntity->mp)
+        {
+            wprintw(interface->win, "▰");
+        }
+        else
+        {
+            wprintw(interface->win, "▱");
+        }
+    }
+
+    mvwprintw(interface->win, 2, interface->width / 2, "HP ");
+    for (int i = 0; i < mgr->currentEnemy->maxHP; i++)
+    {
+        if (i < mgr->currentEnemy->hp)
+        {
+            wprintw(interface->win, "▰");
+        }
+        else
+        {
+            wprintw(interface->win, "▱");
+        }
+    }
+    mvwprintw(interface->win, 3, interface->width / 2, "MP ");
+    for (int i = 0; i < mgr->currentEnemy->maxMP; i++)
+    {
+        if (i < mgr->currentEnemy->mp)
+        {
+            wprintw(interface->win, "▰");
+        }
+        else
+        {
+            wprintw(interface->win, "▱");
+        }
+    }
+
+    int i = 0;
+    for (const auto &a : *actions)
+    {
+        if (i == interface->choice)
+        {
+            wattron(interface->win, A_REVERSE);
+            mvwprintw(interface->win, 4 + i, 1, "\t%-20s ", a->getName().c_str());
+            wattroff(interface->win, A_REVERSE);
+            i++;
+            continue;
+        }
+        mvwprintw(interface->win, 4 + i, 1, "\t%-20s ", a->getName().c_str());
+        i++;
+    }
+
+    wattron(interface->win, A_BOLD);
+    printLeftAlignedText(interface->win, 1, 1, mgr->playerEntity->name);
+    wattroff(interface->win, A_BOLD);
+    wattron(interface->win, A_BOLD);
+    printLeftAlignedText(interface->win, 1, interface->width / 2, mgr->currentEnemy->name);
+    wattroff(interface->win, A_BOLD);
+    printLeftAlignedText(interface->win, interface->height / 2, 1, scene_conf.at("text"));
+
+    mvwprintw(interface->win, interface->height - 5, 1, " (▲/▼):\tChoose Option");
+    mvwprintw(interface->win, interface->height - 4, 1, " (Enter):\tSelect option");
+    // mvwprintw(interface->win, interface->height - 3, 1, " (E):\t\tInventory");
+    // mvwprintw(interface->win, interface->height - 2, 1, " (S):\t\tCharacter sheet");
+
+    int c = wgetch(interface->win);
+    if (c == KEY_UP)
+    {
+        interface->choice--;
+    }
+    if (c == KEY_DOWN)
+    {
+        interface->choice++;
+    }
+    interface->choice = (interface->choice + nChoices) % nChoices;
+    if (c == 10)
+    {
+        actions->at(interface->choice)->execute(mgr, mgr->playerEntity, {});
+        if (!mgr->currentEnemy->isAlive)
+        {
+            mgr->fireEvent(outcomes[0]);
+            return;
+        }
+        mgr->currentEnemy->actions->at(0)->execute(mgr, mgr->currentEnemy, {});
+        if (!mgr->playerEntity->isAlive)
+        {
+            mgr->fireEvent(outcomes[1]);
+            return;
+        }
+        // mvwprintw(win, this->height / 2, this->width / 2, "%s", choices[this->choice].c_str());
+        // mgr->fireEvent(options[interface->choice]);
+    }
 }
 
 void DialogWindow::refresh(GameManager *mgr, CursesInterface *interface)
@@ -141,21 +252,23 @@ void DialogWindow::refresh(GameManager *mgr, CursesInterface *interface)
         if (i == interface->choice)
         {
             wattron(interface->win, A_REVERSE);
-            mvwprintw(interface->win, 4 + i, 1, "\t%-20s ", c.at("name").c_str());
+            mvwprintw(interface->win, interface->height / 2 + i, 1, "\t%-20s ", c.at("name").c_str());
             wattroff(interface->win, A_REVERSE);
             i++;
             continue;
         }
-        mvwprintw(interface->win, 4 + i, 1, "\t%-20s ", c.at("name").c_str());
+        mvwprintw(interface->win, interface->height / 2 + i, 1, "\t%-20s ", c.at("name").c_str());
         i++;
     }
-
-    printLeftAlignedText(interface->win, interface->height / 2, 2, scene_conf.at("text"));
+    wattron(interface->win, A_BOLD);
+    printLeftAlignedText(interface->win, 1, 1, scene_conf.at("interlocutor"));
+    wattroff(interface->win, A_BOLD);
+    printLeftAlignedText(interface->win, 2, 4, scene_conf.at("text"));
 
     mvwprintw(interface->win, interface->height - 5, 1, " (▲/▼):\tChoose Option");
     mvwprintw(interface->win, interface->height - 4, 1, " (Enter):\tSelect option");
-    mvwprintw(interface->win, interface->height - 3, 1, " (E):\t\tInventory");
-    mvwprintw(interface->win, interface->height - 2, 1, " (S):\t\tCharacter sheet");
+    // mvwprintw(interface->win, interface->height - 3, 1, " (E):\t\tInventory");
+    // mvwprintw(interface->win, interface->height - 2, 1, " (S):\t\tCharacter sheet");
 
     int c = wgetch(interface->win);
     if (c == KEY_UP)
@@ -170,6 +283,56 @@ void DialogWindow::refresh(GameManager *mgr, CursesInterface *interface)
     if (c == 10)
     {
         // mvwprintw(win, this->height / 2, this->width / 2, "%s", choices[this->choice].c_str());
+        mgr->fireEvent(options[interface->choice]);
+    }
+}
+
+void CharacterSelectionWindow::refresh(GameManager *mgr, CursesInterface *interface) {
+
+    wclear(interface->win);
+    box(interface->win, 0, 0);
+    object scene_conf = mgr->currentScene->config;
+    vector<object> options = mgr->currentScene->options;
+    int nChoices = options.size();
+    int i = 0;
+    for (auto &c : options)
+    {
+        if (i == interface->choice)
+        {
+            wattron(interface->win, A_REVERSE);
+            mvwprintw(interface->win, interface->height / 2 + i, 1, "\t%-20s ", c.at("name").c_str());
+            wattroff(interface->win, A_REVERSE);
+            i++;
+            continue;
+        }
+        mvwprintw(interface->win, interface->height / 2 + i, 1, "\t%-20s ", c.at("name").c_str());
+        i++;
+    }
+    wattron(interface->win, A_BOLD);
+    printLeftAlignedText(interface->win, 1, 1, scene_conf.at("displayname"));
+    wattroff(interface->win, A_BOLD);
+    printLeftAlignedText(interface->win, 2, 4, scene_conf.at("text"));
+    printLeftAlignedText(interface->win, 2, interface->width/2, options[interface->choice].at("description"));
+
+    mvwprintw(interface->win, interface->height - 5, 1, " (▲/▼):\tChoose Option");
+    mvwprintw(interface->win, interface->height - 4, 1, " (Enter):\tSelect option");
+    // mvwprintw(interface->win, interface->height - 3, 1, " (E):\t\tInventory");
+    // mvwprintw(interface->win, interface->height - 2, 1, " (S):\t\tCharacter sheet");
+
+    int c = wgetch(interface->win);
+    if (c == KEY_UP)
+    {
+        interface->choice--;
+    }
+    if (c == KEY_DOWN)
+    {
+        interface->choice++;
+    }
+    interface->choice = (interface->choice + nChoices) % nChoices;
+    if (c == 10)
+    {
+        // mvwprintw(win, this->height / 2, this->width / 2, "%s", choices[this->choice].c_str());
+        mgr->playerEntity = mgr->entityFactories.at(options[interface->choice].at("type"))->create(options[interface->choice]);
         mgr->fireEvent(options[interface->choice]);
     }
 }

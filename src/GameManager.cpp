@@ -5,20 +5,15 @@ void GameManager::load()
 {
     cout << "Loading game assets..." << endl;
     this->config.read();
-    this->entityLibrary = new EntityLibrary();
-    for (auto &&entitydef : this->config.entitiesconfig)
-    {
-        this->entityLibrary->add(entitydef);
-    }
 
     // Utils::displayMap(this->config.adventureconfig);
-    this->currentScene = Scene::fromObjectList(GoldReader::parseFile(this->config.adventureconfig.at("startingScene")), this);
     cout << "Game loaded !" << endl;
 }
 
 void GameManager::start()
 {
     this->running = true;
+    this->currentScene = Scene::fromObjectList(GoldReader::parseFile(this->config.adventureconfig.at("startingScene")), this);
     this->interface->init();
     while (this->running)
     {

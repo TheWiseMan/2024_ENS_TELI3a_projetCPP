@@ -1,0 +1,30 @@
+displayname::Choose your class
+type::characterSelection
+text::Choose your class carefully, for you might never change
+----
+name::Warrior
+type::playable
+description::Biggest sword clearly
+maxHP::20
+atk::3
+action::goto
+scene::scene_character_warrior.gold
+----
+name::Healer
+type::healerPlayable
+description::Usually altruistic people, but I guess you're all alone here.
+maxHP::10
+atk::1
+action::goto
+scene::scene_character_healer.gold
+----
+name::Rogue
+type::playable
+description::Now you see me, now you don't
+maxHP::15
+atk::2
+critRate::0.5
+critMult::2
+agility::0.7
+action::goto
+scene::scene_2.gold

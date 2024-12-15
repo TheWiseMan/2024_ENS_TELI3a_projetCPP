@@ -11,17 +11,32 @@
 using namespace std;
 
 const map<string, SceneFactory *> SCENE_FACTORIES = {
-    {"dialog", new DialogSceneFactory()}};
+    {"dialog", new DialogSceneFactory()},
+    {"combat", new CombatSceneFactory()},
+    {"characterSelection", new characterSelectionSceneFactory()}};
+
+const map<string, EntityFactory *> ENTITY_FACTORIES = {
+    {"simpleEntity", new SimpleEntityFactory()},
+    {"playable", new PlayerEntityFactory()},
+    {"healerPlayable", new HealerPlayerEntityFactory()}};
 
 int main(int argc, char const *argv[])
 {
-    GameManager gm;
     CursesInterface ihm;
+
     ihm.windows["dialog"] = new DialogWindow();
-    gm.sceneFactories = SCENE_FACTORIES;
+    ihm.windows["combat"] = new CombatWindow();
+    ihm.windows["characterSelection"] = new CharacterSelectionWindow();
+
+    GameManager gm;
     gm.interface = &ihm;
+    gm.sceneFactories = SCENE_FACTORIES;
+    gm.entityFactories = ENTITY_FACTORIES;
+
     gm.events["goto"] = new ChangeSceneEvent();
     gm.events["endgame"] = new EndGameEvent();
+    gm.events["attack"] = new AttackEnemyEvent();
+
     try
     {
         gm.load();

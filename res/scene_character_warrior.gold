@@ -1,0 +1,9 @@
+displayname::The beginning
+type::dialog
+interlocutor::The One
+text::So, you're a warrior ?
+Interesting, let's see what you can do.
+----
+name::continue
+action::goto
+scene::scene_2.gold
