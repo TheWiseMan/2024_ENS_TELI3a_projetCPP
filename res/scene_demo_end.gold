@@ -1,7 +1,7 @@
 displayname::The beginning
 type::dialog
-interlocutor::The One
-text::It seems you are competent enough, I must tell you rapidly...
+interlocutor::ADMIN
+text::This is the end of this demo, but there will be more
 action::regen
 ----
 name::I'll be back !

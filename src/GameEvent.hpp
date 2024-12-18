@@ -35,4 +35,10 @@ public:
     void fire(GameManager *gm, object config);
 };
 
-// class BuffAtkEvent(config.amount), class BuffDefEvent(config.amount)
+class BuffAtkEvent : public GameEvent
+{
+public:
+    void fire(GameManager *gm, object config);
+};
+
+//class BuffDefEvent(config.amount);

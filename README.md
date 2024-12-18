@@ -18,3 +18,7 @@ make;
 Compiler et lancer -> `make; ./bin/main`
 
 G++17
+
+# TODO list
+
+- [x] Atk buff game event

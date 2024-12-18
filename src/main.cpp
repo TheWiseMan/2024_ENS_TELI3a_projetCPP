@@ -37,6 +37,7 @@ int main(int argc, char const *argv[])
     gm.events["endgame"] = new EndGameEvent();
     gm.events["attack"] = new AttackEnemyEvent();
     gm.events["regen"] = new RegeneratePlaverEvent();
+    gm.events["buffatk"] = new BuffAtkEvent();
 
     try
     {
